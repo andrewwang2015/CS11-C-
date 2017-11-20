@@ -1,4 +1,4 @@
-# CS11-C-
+# CS11-C\+\+
 Learning some good old C++. Topics include:
 
 - Genetic algorithms
