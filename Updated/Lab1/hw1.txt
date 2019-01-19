@@ -1,0 +1,9 @@
+CS11 Intro C++ Lab 1 - Questions
+================================
+
+Q1:  Are you using GNU g++ or LLVM clang++?  Show how you know this by
+     running a command on your system and including the output in this file.
+
+
+Q2:  What command do you use to build your submission?
+g++ -std=c++14 -Wall convert.cpp units.cpp -o convert
