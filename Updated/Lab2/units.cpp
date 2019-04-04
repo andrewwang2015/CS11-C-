@@ -9,9 +9,7 @@ UValue::UValue(double value, string units) {
     this->value = value;
     this->units = units;
 }
-UValue::~UValue() {
-    // No dynamically allocated resources
-}
+
 
 /**
  * Getter method for value
@@ -65,7 +63,7 @@ UValue UnitConverter::convert_to(UValue input, string to_units) {
     // Search for conversion info.
     for (Conversion c: conversions) {
         if (c.from_units == input_units && c.to_units == to_units) {
-            return UValue(input_value * c.multiplier, to_units);
+            return UValue{input_value * c.multiplier, to_units};
         }
     }
 

@@ -10,9 +10,6 @@ UValue::UValue(double value, string units) {
     this->value = value;
     this->units = units;
 }
-UValue::~UValue() {
-    // No dynamically allocated resources
-}
 
 /**
  * Getter method for value

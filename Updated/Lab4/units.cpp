@@ -6,7 +6,7 @@ using namespace std;
 /**
  * Constructor for UValue. Takes in a value and a unit.
  */
-UValue::UValue(double value, string units) {
+UValue::UValue(double value, const string &units) {
     this->value = value;
     this->units = units;
 }
@@ -42,11 +42,13 @@ string UValue::get_units() const {
  * @param multiplier   actual value to convert
  * @param to_units     unit to convert to
  */
-void UnitConverter::add_conversion(const string &from_units, const double multiplier, const string &to_units) {
+void UnitConverter::add_conversion(const string &from_units, 
+    const double multiplier, const string &to_units) {
     // First test if conversion exists. 
     for (Conversion c: conversions) {
         if (c.from_units == from_units && c.to_units == to_units) {
-            string error_msg = "Already have a conversion from " + from_units + " to " + to_units;
+            string error_msg = "Already have a conversion from " + 
+                from_units + " to " + to_units;
             throw invalid_argument(error_msg);
         }
     }
@@ -59,13 +61,14 @@ void UnitConverter::add_conversion(const string &from_units, const double multip
 }
 
 /**
- * Converts from one UValue to another. Wrapper function for convert_to that takes 
- * three arguments.
+ * Converts from one UValue to another. Wrapper function for convert_to that 
+ * takes three arguments.
  * @param input The UValue to convert
  * @param to_units The unit to convert to.
  * @return the converted UValue.
  */
-UValue UnitConverter::convert_to(const UValue &input, const string &to_units) const {
+UValue UnitConverter::convert_to(const UValue &input, 
+    const string &to_units) const {
     return convert_to(input, to_units, set<string> {});
 }
 
@@ -74,10 +77,12 @@ UValue UnitConverter::convert_to(const UValue &input, const string &to_units) co
  * Throws invalid_argument exception if conversion information does not exist.
  * @param input The UValue to convert
  * @param to_units The unit to convert to.
- * @param seen_units Set of units already seen. This prevents infinite recursion.
+ * @param seen_units Set of units already seen. This prevents infinite 
+ *  recursion.
  * @return the converted UValue.
  */
-UValue UnitConverter::convert_to(const UValue &input, const string &to_units, set<string> seen_units) const {
+UValue UnitConverter::convert_to(const UValue &input, const string &to_units, 
+    set<string> seen_units) const {
     string input_units = input.get_units();
     double input_value = input.get_value();
 
@@ -88,11 +93,13 @@ UValue UnitConverter::convert_to(const UValue &input, const string &to_units, se
         if (c.from_units == input_units && c.to_units == to_units) {
             return UValue(input_value * c.multiplier, to_units);
         } else {
-            // If we cannot convert directly, then we do indirect conversion by 
-            // switching units
-            if (c.from_units == input_units && !seen_units.count(c.to_units)) {
+            // If we cannot convert directly, then we do indirect conversion 
+            // by switching units
+            if (c.from_units == input_units && 
+                !seen_units.count(c.to_units)) {
                 // Convert input to c.to_units 
-                UValue input_convert = UValue(input_value * c.multiplier, c.to_units);
+                UValue input_convert = UValue(input_value * c.multiplier, 
+                    c.to_units);
 
                 // We need try, catch block to prevent dead ends.
                 try {
@@ -106,6 +113,7 @@ UValue UnitConverter::convert_to(const UValue &input, const string &to_units, se
     }
 
     // If it reaches this point, then we know that no conversion info exists.
-    string error_msg = "Don't know how to convert from " + input_units + " to " + to_units;
+    string error_msg = "Don't know how to convert from " + input_units + 
+        " to " + to_units;
     throw invalid_argument(error_msg);
 }

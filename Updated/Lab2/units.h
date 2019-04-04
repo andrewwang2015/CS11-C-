@@ -21,6 +21,7 @@ const double ML_IN_L = 1000;
 
 #include <string> 
 #include <vector>
+using std::string;
 /* 
  * Class represents a "united-value" or a "value-with-units". 
  */
@@ -28,14 +29,13 @@ class UValue {
     // Actual value 
     double value;
     // The units (i.e. "kg", "mi", etc.)
-    std::string units;
+    string units;
 
 public:
-    UValue(double value, std::string unit);
-    ~UValue();
+    UValue(double value, string unit);
 
     double get_value();
-    std::string get_units();
+    string get_units();
 };
 
 /**
@@ -47,9 +47,9 @@ class UnitConverter {
      * unit to convert from, the actual value, and the unit to convert to.
      */
     struct Conversion {
-        std::string from_units;
+        string from_units;
         double multiplier;
-        std::string to_units;
+        string to_units;
     };
 
     // Record the collection of conversions the object knows about
@@ -57,7 +57,7 @@ class UnitConverter {
 
 
 public:
-    void add_conversion(std::string from_units, double multiplier, std::string to_units);
-    UValue convert_to(UValue input, std::string to_units);
+    void add_conversion(string from_units, double multiplier, string to_units);
+    UValue convert_to(UValue input, string to_units);
 };
 #endif

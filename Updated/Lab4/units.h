@@ -4,19 +4,21 @@
 #include <string>
 #include <set>
 #include <vector>
+
+using std::string;
 /**
  * Class represents a "united-value" or a "value-with-units". 
  */
 class UValue {
     double value;   /**< The actual value. */
-    std::string units; /**< The units (i.e. "kg", "mi", etc.). */
+    string units; /**< The units (i.e. "kg", "mi", etc.). */
 
 public:
-    UValue(double value, std::string unit);
+    UValue(double value, const string &unit);
     ~UValue();
 
     double get_value() const;
-    std::string get_units() const;
+    string get_units() const;
 };
 
 /**
@@ -28,9 +30,9 @@ class UnitConverter {
      * unit to convert from, the actual value, and the unit to convert to.
      */
     struct Conversion {
-        std::string from_units;
+        string from_units;
         double multiplier;
-        std::string to_units;
+        string to_units;
     };
 
     /** Record the collection of conversions the object knows about */
@@ -38,8 +40,11 @@ class UnitConverter {
 
 
 public:
-    void add_conversion(const std::string &from_units, const double multiplier, const std::string &to_units);
-    UValue convert_to(const UValue &input, const std::string &to_units) const;
-    UValue convert_to(const UValue &input, const std::string &to_units, std::set<std::string> seen) const;
+    void add_conversion(const string &from_units, 
+        const double multiplier, const string &to_units);
+    UValue convert_to(const UValue &input, 
+        const string &to_units) const;
+    UValue convert_to(const UValue &input, const string &to_units, 
+        std::set<string> seen) const;
 };
 #endif

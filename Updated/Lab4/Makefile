@@ -7,6 +7,7 @@ convert : $(CONVERT_OBJS)
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
 
 test : hw3testunits 
+	./$^
 
 hw3testunits : $(TEST_OBJS)
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)

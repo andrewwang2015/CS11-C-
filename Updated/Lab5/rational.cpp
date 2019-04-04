@@ -2,9 +2,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <cmath>
-
-#define MIN(a, b) ((a < b) ? a : b)
-#define MAX(a, b) ((a > b) ? a : b) 
+#include <algorithm>
 
 using namespace std;
 
@@ -25,12 +23,6 @@ Rational::Rational(int n, int d) {
     this->numerator = n;
     this->denominator = d;
 }
-
-/**
- * Destructor for Rational class. There are no 
- * dynamically allocated resources so nothing is done.
- */
-Rational::~Rational() {}
 
 /**
  * Getter method that returns the numerator
@@ -54,7 +46,7 @@ int Rational::denom() const {
  * @return   the reciprocal of the input
  */
 Rational Rational::reciprocal() const {
-    return Rational(this->denom(), this->num());
+    return Rational{this->denom(), this->num()};
 }
 
 /**
@@ -86,8 +78,8 @@ int Rational::gcd(int a, int b) const {
     /** Take absolute value of inputs. */
     a = abs(a);
     b = abs(b);
-    int smaller = MIN(a,b);
-    int bigger = MAX(a, b);
+    int smaller = min(a,b);
+    int bigger = max(a, b);
     for (int i = smaller; i > 0; i--) {
         if (smaller % i == 0 && bigger % i == 0) {
             return i;
@@ -164,13 +156,14 @@ Rational& Rational::operator/=(const Rational &rhs) {
  * @param rhs rational to compare this to
  * @return true if the two Rationals are equal else false
  */
-bool Rational::operator==(const Rational &rhs) {
+bool Rational::operator==(const Rational &rhs) const {
     /** Make copy because we want to reduce before comparison */
     Rational rhs_c = rhs;
     rhs_c.reduce();
-    this->reduce();
-    return this->num() == rhs_c.num() && 
-        this->denom() == rhs_c.denom();
+    Rational current = *this;
+    current.reduce();
+    return current.num() == rhs_c.num() && 
+        current.denom() == rhs_c.denom();
 }
 
 /**
@@ -178,49 +171,49 @@ bool Rational::operator==(const Rational &rhs) {
  * @param rhs rational to compare this to
  * @return true if the two Rationals are NOT equal else false
  */
-bool Rational::operator!=(const Rational &rhs) {
+bool Rational::operator!=(const Rational &rhs) const {
     return !(*this == rhs);
 }
 
 
 /**
  * Operator overload for addition of two rationals.
- * @param r rational 1
- * @param r1 rational 2
+ * @param r1 rational 1
+ * @param r2 rational 2
  * @return the sum of the two rationals
  */
-Rational operator+(const Rational &r, const Rational &r1) {
-    return Rational{r} += r1;
+Rational operator+(const Rational &r1, const Rational &r2) {
+    return Rational{r1} += r2;
 }
 
 /**
  * Operator overload for subtraction of two rationals.
- * @param r rational 1
- * @param r1 rational 2
+ * @param r1 rational 1
+ * @param r2 rational 2
  * @return the difference of the two rationals
  */
-Rational operator-(const Rational &r, const Rational &r1) {
-    return Rational{r} -= r1;
+Rational operator-(const Rational &r1, const Rational &r2) {
+    return Rational{r1} -= r2;
 }
 
 /**
  * Operator overload for multiplication of two rationals.
- * @param r rational 1
- * @param r1 rational 2
+ * @param r1 rational 1
+ * @param r2 rational 2
  * @return the product of the two rationals
  */
-Rational operator*(const Rational &r, const Rational &r1) {
-    return Rational{r} *= r1;
+Rational operator*(const Rational &r1, const Rational &r2) {
+    return Rational{r1} *= r2;
 }
 
 /**
  * Operator overload for division of two rationals.
- * @param r rational 1
- * @param r1 rational 2
+ * @param r1 rational 1
+ * @param r2 rational 2
  * @return the quotient of the two rationals
  */
-Rational operator/(const Rational &r, const Rational &r1) {
-    return Rational{r} /= r1;
+Rational operator/(const Rational &r1, const Rational &r2) {
+    return Rational{r1} /= r2;
 }
 
 /**

@@ -3,13 +3,15 @@
 
 #include <iostream>
 
+/**
+ * Class represents rational numbers, represented as numerator/denominator
+ */
 class Rational {
     int numerator;   /**< The numerator of the rational. */
     int denominator; /**< The denominator of the rational. */
 
 public:
     Rational(int n = 0, int d = 1);
-    ~Rational();
 
     int num() const;
     int denom() const;
@@ -22,8 +24,8 @@ public:
     Rational& operator/=(const Rational &rhs);
 
     /** Comparison assignment operator overloads */
-    bool operator==(const Rational &rhs);
-    bool operator!=(const Rational &rhs);
+    bool operator==(const Rational &rhs) const;
+    bool operator!=(const Rational &rhs) const;
 
 private: 
     int gcd(int a, int b) const;
@@ -32,10 +34,10 @@ private:
 /** Non member functions */
 
 /** Binary arithmetic operator overloads */
-Rational operator+(const Rational &r, const Rational &r1);
-Rational operator-(const Rational &r, const Rational &r1);
-Rational operator*(const Rational &r, const Rational &r1);
-Rational operator/(const Rational &r, const Rational &r1);
+Rational operator+(const Rational &r1, const Rational &r2);
+Rational operator-(const Rational &r1, const Rational &r2);
+Rational operator*(const Rational &r1, const Rational &r2);
+Rational operator/(const Rational &r1, const Rational &r2);
 
 std::ostream& operator<<(std::ostream &os, const Rational &r); 
 

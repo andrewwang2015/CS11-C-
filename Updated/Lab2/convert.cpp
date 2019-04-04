@@ -39,7 +39,7 @@ int main() {
     double from_value;
     cout << "Enter value with units: ";
     cin >> from_value >> from_units;
-    UValue from_U(from_value, from_units);
+    UValue from_U{from_value, from_units};
 
     string to_units;
     cout << "Convert to units: ";
@@ -47,8 +47,9 @@ int main() {
     try {
         UValue converted_U = u.convert_to(from_U, to_units);      
         // Successful conversion
-        cout << "Converted to: " << converted_U.get_value() << " " << to_units << endl;
-    } catch (invalid_argument e) {
+        cout << "Converted to: " << converted_U.get_value() << " " << 
+            to_units << endl;
+    } catch (invalid_argument &e) {
         cout << "Couldn't convert to " << to_units << "!" << endl;
         cout << e.what() << endl;
     }
